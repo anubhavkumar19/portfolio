@@ -10,10 +10,16 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1">{children}</main>
+
+      {/* THIS is the key fix */}
+      <main className="flex-1 pt-[var(--nav-h)]">
+        {children}
+      </main>
+
       <Footer />
     </div>
   );
 };
+
 
 export default Layout;

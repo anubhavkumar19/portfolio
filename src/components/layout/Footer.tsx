@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="text-3xl font-display font-bold gradient-text">
-              AK
+              ANUK
             </Link>
             <p className="mt-4 text-muted-foreground max-w-md">
               Full-Stack MERN Developer & ECE Student at NIT Patna. Building secure,
@@ -88,7 +88,7 @@ const Footer = () => {
             © {currentYear} Anubhav Kumar. All rights reserved.
           </p>
           <p className="text-muted-foreground text-sm">
-            Built with React, TypeScript & Tailwind CSS
+            Improving retention by 7%, one pixel at a time
           </p>
         </div>
       </div>

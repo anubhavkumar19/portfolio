@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -14,57 +14,100 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const location = useLocation();
 
+  /* ---------- scroll effect ---------- */
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* ---------- close mobile menu on route change ---------- */
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location]);
 
+  /* ---------- theme handling ---------- */
+  useEffect(() => {
+    const savedTheme =
+      (localStorage.getItem("theme") as "light" | "dark") || "dark";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass-card py-3" : "py-5"
-      }`}
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 inset-x-0 z-50 transition-all
+    h-16 md:h-20
+    ${isScrolled
+          ? "bg-background/80 backdrop-blur-2xl border-b border-border"
+          : "bg-transparent"}
+  `}
+      style={{ "--nav-h": "5rem" } as React.CSSProperties}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+
+      <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <motion.span
+          <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-display font-bold gradient-text"
+            className="w-25 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center text-white font-bold"
           >
-            AK
-          </motion.span>
+            ANUK
+          </motion.div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`nav-link font-medium ${
-                location.pathname === link.path ? "active text-foreground" : ""
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active = location.pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`relative text-sm font-medium transition-colors ${active
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
+              >
+                {link.name}
+                {active && (
+                  <motion.span
+                    layoutId="active-pill"
+                    className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"
+                  />
+                )}
+              </Link>
+            );
+          })}
+
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="p-2 rounded-xl border border-border hover:bg-accent transition"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
+          {/* CTA */}
           <a
             href="https://github.com/anubhavkumar19"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary text-sm"
+            className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition"
           >
             GitHub
           </a>
@@ -73,40 +116,48 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="md:hidden p-2 text-foreground"
+          className="md:hidden p-2 rounded-lg border border-border"
         >
-          {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-card mt-2 mx-4 rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden mx-4 mt-3 rounded-2xl bg-background/95 backdrop-blur-2xl border border-border shadow-xl"
           >
-            <div className="flex flex-col p-6 gap-4">
+            <div className="flex flex-col p-6 gap-5">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-lg font-medium transition-colors ${
-                    location.pathname === link.path
+                  className={`text-base font-medium ${location.pathname === link.path
                       ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                      : "text-muted-foreground"
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
+
+              <button
+                onClick={toggleTheme}
+                className="flex items-center justify-center gap-2 py-3 rounded-xl border border-border"
+              >
+                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                <span>Toggle Theme</span>
+              </button>
+
               <a
                 href="https://github.com/anubhavkumar19"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary text-center mt-2"
+                className="text-center py-3 rounded-xl bg-primary text-primary-foreground font-medium"
               >
                 GitHub
               </a>
@@ -114,7 +165,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </motion.header>
   );
 };
 

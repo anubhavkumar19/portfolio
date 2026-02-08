@@ -1,211 +1,150 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Server, Database, Globe, Shield, MessageSquare, Bot } from "lucide-react";
+import { Github, ExternalLink, CheckCircle } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import AnimatedSection from "@/components/shared/AnimatedSection";
 
 const projects = [
   {
-    title: "PulsePoint",
-    subtitle: "Smart Medical Appointment & Remedy System",
-    description:
-      "A comprehensive medical platform enabling patients to check appointments and access remedy documents. Features secure user authentication, responsive frontend with dynamic content, and MongoDB database models for users, doctors, diseases, and reviews.",
-    features: [
-      "Secure authentication with Passport.js",
-      "Session management and authorization",
-      "Responsive EJS frontend with dynamic rendering",
-      "Remedy library with category-based filtering",
-      "Doctor rating and feedback system",
-      "Deployed on Render with scalability",
-    ],
-    tech: ["JavaScript", "Node.js", "Express.js", "EJS", "MongoDB", "Passport.js"],
-    github: "https://github.com/anubhavkumar19/Pulse_Point",
-    live: "https://pulsepoint-nh9x.onrender.com/",
-    icon: <Shield className="text-cyan-400" size={32} />,
-    gradient: "from-cyan-500/20 to-blue-500/20",
-  },
-  {
     title: "VartalApp",
-    subtitle: "Real-Time Chat Application",
+    role: "Real-Time Chat Application",
     description:
-      "Engineered a real-time messaging application using the MERN stack with Socket.IO for live communication. Features secure JWT authentication, bcrypt password hashing, and responsive React UI with Zustand state management.",
-    features: [
-      "Real-time messaging with Socket.IO",
-      "JWT authentication & bcrypt hashing",
-      "Online/offline status tracking",
-      "Read receipts functionality",
-      "Responsive Tailwind CSS design",
-      "Deployed on Render",
+      "A modern chat system supporting real-time communication, user presence, and secure authentication using MERN and WebSockets.",
+    highlights: [
+      "Socket.IO real-time messaging",
+      "JWT + bcrypt security",
+      "Online/offline indicators",
+      "State handled via Zustand",
     ],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Socket.IO", "Tailwind CSS", "Zustand"],
+    tech: ["React", "Node.js", "MongoDB", "Socket.IO"],
     github: "https://github.com/anubhavkumar19/VartalApp",
     live: "https://vartalapp-hytu.onrender.com/",
-    icon: <MessageSquare className="text-purple-400" size={32} />,
-    gradient: "from-purple-500/20 to-pink-500/20",
+    projectImg:"./src/assets/vartalapp.png"
   },
   {
     title: "Kritrim Assistant",
-    subtitle: "AI Chatbot with Gemini API",
+    role: "AI Chatbot Platform",
     description:
-      "A MERN stack chatbot leveraging Google's Gemini API for intelligent conversations. Built with responsive UI and successfully deployed on Render for production use. Demonstrates integration of AI/ML APIs with full-stack development.",
-    features: [
+      "An AI-powered chatbot integrating Google Gemini API, demonstrating production-level AI + MERN integration.",
+    highlights: [
       "Gemini API integration",
-      "Intelligent conversational AI",
-      "Responsive modern UI",
-      "Full MERN stack implementation",
-      "Production deployment on Render",
-      "Real-time chat interface",
+      "Scalable MERN backend",
+      "Clean conversational UI",
+      "Production deployment",
     ],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Gemini API", "CSS"],
+    tech: ["React", "Node.js", "MongoDB", "Gemini API"],
     github: "https://github.com/anubhavkumar19/Kritrim-Assistant",
     live: "https://kritrim-assistant.onrender.com/",
-    icon: <Bot className="text-emerald-400" size={32} />,
-    gradient: "from-emerald-500/20 to-teal-500/20",
+    projectImg:"./src/assets/kritrim.png"
+  },
+  {
+    title: "PulsePoint",
+    role: "Full-Stack Medical Platform",
+    description:
+      "A secure healthcare platform allowing patients to book appointments, explore remedies, and interact with doctors through structured data models.",
+    highlights: [
+      "Passport.js based authentication",
+      "Doctor review & rating system",
+      "Remedy knowledge base",
+      "Session-based authorization",
+    ],
+    tech: ["Node.js", "Express", "MongoDB", "EJS"],
+    github: "https://github.com/anubhavkumar19/Pulse_Point",
+    live: "https://pulsepoint-nh9x.onrender.com/",
+    projectImg:"./src/assets/pulsepoint.png"
   },
 ];
 
 const Projects = () => {
   return (
     <Layout>
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="floating-orb w-96 h-96 -top-48 -right-48" />
-        <div className="floating-orb-accent w-80 h-80 bottom-1/4 -left-40" />
-
-        <div className="container mx-auto px-6 relative z-10">
+      <section className="pt-24 pb-28 scroll-mt-24 bg-background">
+        <div className="container mx-auto px-6 max-w-6xl">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="mb-20"
           >
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
-              My <span className="gradient-text">Projects</span>
+            <h1 className="text-5xl font-display font-bold mb-4">
+              Selected <span className="text-primary">Projects</span>
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A showcase of full-stack applications built with modern technologies,
-              focusing on security, real-time features, and user experience.
+            <p className="text-muted-foreground max-w-2xl">
+              A focused collection of systems I’ve built — emphasizing backend
+              architecture, security, and real-world usability.
             </p>
           </motion.div>
 
-          {/* Tech Stack Overview */}
-          <AnimatedSection className="mb-16">
-            <div className="glass-card p-8 rounded-3xl">
-              <h2 className="text-2xl font-display font-semibold text-center mb-8">
-                Core Technologies Used
-              </h2>
-              <div className="flex flex-wrap justify-center gap-4">
-                {["React", "Node.js", "Express.js", "MongoDB", "Socket.IO", "JWT", "Tailwind CSS", "EJS"].map(
-                  (tech, index) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.05 }}
-                      className="skill-tag px-5 py-2.5"
-                    >
-                      {tech}
-                    </motion.span>
-                  )
-                )}
-              </div>
-            </div>
-          </AnimatedSection>
-
-          {/* Projects Grid */}
-          <div className="space-y-12">
+          {/* Projects */}
+          <div className="space-y-28">
             {projects.map((project, index) => (
-              <AnimatedSection key={project.title} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className={`glass-card p-8 md:p-10 rounded-3xl bg-gradient-to-br ${project.gradient}`}
-                >
-                  <div className="grid lg:grid-cols-3 gap-8">
-                    {/* Left - Main Info */}
-                    <div className="lg:col-span-2">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-xl bg-background/50">
-                          {project.icon}
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-display font-bold">{project.title}</h3>
-                          <p className="text-primary">{project.subtitle}</p>
-                        </div>
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className={`grid lg:grid-cols-2 gap-12 items-center`}
+              >
+                {/* Text */}
+                <div className={index % 2 ? "lg:order-2" : ""}>
+                  <h2 className="text-3xl font-display font-semibold mb-2">
+                    {project.title}
+                  </h2>
+                  <p className="text-primary text-sm mb-4">{project.role}</p>
+
+                  <p className="text-muted-foreground mb-6">
+                    {project.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    {project.highlights.map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <CheckCircle size={16} className="text-primary mt-0.5" />
+                        {item}
                       </div>
-
-                      <p className="text-muted-foreground mb-6">{project.description}</p>
-
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {project.tech.map((tech) => (
-                          <span key={tech} className="skill-tag text-sm">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-4">
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-outline flex items-center gap-2 text-sm"
-                        >
-                          <Github size={18} />
-                          View Code
-                        </a>
-                        <a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-primary flex items-center gap-2 text-sm"
-                        >
-                          <ExternalLink size={18} />
-                          Live Demo
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Right - Features */}
-                    <div className="lg:border-l lg:border-border/30 lg:pl-8">
-                      <h4 className="font-semibold mb-4 flex items-center gap-2">
-                        <Server size={18} className="text-primary" />
-                        Key Features
-                      </h4>
-                      <ul className="space-y-2">
-                        {project.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    ))}
                   </div>
-                </motion.div>
-              </AnimatedSection>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-xs rounded-full border border-border"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-4">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      className="inline-flex items-center gap-2 text-sm font-medium hover:text-primary"
+                    >
+                      <Github size={18} /> Source
+                    </a>
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      className="inline-flex items-center gap-2 text-sm font-medium hover:text-primary"
+                    >
+                      <ExternalLink size={18} /> Live
+                    </a>
+                  </div>
+                </div>
+
+                {/* Visual block */}
+                <div
+                  className={`h-64 rounded-3xl border border-border bg-gradient-to-br from-primary/10 to-transparent`}
+                  >
+                    <img src={project.projectImg} alt="Project visual" />
+                  </div>
+              </motion.div>
             ))}
           </div>
-
-          {/* GitHub CTA */}
-          <AnimatedSection className="mt-16">
-            <div className="glass-card p-10 rounded-3xl text-center">
-              <Database className="mx-auto mb-4 text-primary" size={48} />
-              <h2 className="text-2xl font-display font-bold mb-4">
-                Want to see more?
-              </h2>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Check out my GitHub profile for more projects, contributions, and code samples.
-              </p>
-              <a
-                href="https://github.com/anubhavkumar19"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                <Github size={20} />
-                View GitHub Profile
-              </a>
-            </div>
-          </AnimatedSection>
         </div>
       </section>
     </Layout>
